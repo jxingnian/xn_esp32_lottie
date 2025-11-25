@@ -70,13 +70,13 @@
  
  // 动画配置表 - 全屏显示配置（屏幕尺寸：412x412）
  static const lottie_anim_config_t anim_configs[] = {
-     [LOTTIE_ANIM_WIFI] = {"/lottie/XN_loading.json", 256, 256},  // WiFi加载
-     [LOTTIE_ANIM_MIC] = {"/lottie/XN_MIC.json", 128, 128},                    // mic
-     [LOTTIE_ANIM_SPEAK] = {"/lottie/speak.json", 400, 277},                // 说话
-     [LOTTIE_ANIM_THINK] = {"/lottie/think.json", 400, 400},                // 思考
-     [LOTTIE_ANIM_COOL] = {"/lottie/cool.json", 400, 400},                  // 酷
-     [LOTTIE_ANIM_LOADING] = {"/lottie/Loading.json", 200, 200},            // 通用加载
-     [LOTTIE_ANIM_OTA] = {"/lottie/ota.json", 400, 400},                    // OTA升级动画
+     [LOTTIE_ANIM_WIFI]    = {"/lottie/loading.json",        256, 256},  // WiFi加载
+     [LOTTIE_ANIM_MIC]     = {"/lottie/emoji_kaixin.json",   128, 128},  // mic
+     [LOTTIE_ANIM_SPEAK]   = {"/lottie/speak.json",          400, 277},  // 说话
+     [LOTTIE_ANIM_THINK]   = {"/lottie/emoji_think.json",    400, 400},  // 思考
+     [LOTTIE_ANIM_COOL]    = {"/lottie/emoji_cool.json",     400, 400},  // 酷
+     [LOTTIE_ANIM_LOADING] = {"/lottie/loading.json",        200, 200},  // 通用加载
+     [LOTTIE_ANIM_OTA]     = {"/lottie/loading.json",        400, 400},  // OTA升级动画
      // 可以继续添加更多动画配置...
  };
  

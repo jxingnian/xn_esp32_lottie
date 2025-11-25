@@ -2,8 +2,8 @@
  * @Author: xingnian j_xingnian@163.com
  * @Date: 2025-08-30 16:00:00
  * @LastEditors: xingnian jixingnian@gmail.com
- * @LastEditTime: 2025-11-15 10:28:31
- * @FilePath: \ESP_ChunFeng\main\bsp\bsp_lcd_spd2010\bsp_lcd_spd2010.h
+ * @LastEditTime: 2025-11-25 16:42:00
+ * @FilePath: \xn_esp32_lottie\components\xn_lottie\include\xn_lottie_panel_spd2010.h
  * @Description: 使用官方SPD2010组件的LCD驱动头文件
  */
 
