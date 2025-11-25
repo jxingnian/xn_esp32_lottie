@@ -1,14 +1,15 @@
 /*
  * @Author: xingnian j_xingnian@163.com
  * @Date: 2025-08-31 23:19:25
- * @LastEditors: xingnian j_xingnian@163.com
- * @LastEditTime: 2025-11-22 09:38:52
- * @FilePath: \esp-chunfeng\components\lottie\lottie_manager.c
+ * @LastEditors: xingnian jixingnian@gmail.com
+ * @LastEditTime: 2025-11-25 17:13:18
+ * @FilePath: \xn_esp32_lottie\components\xn_lottie_manager\src\xn_lottie_manager.c
  * @Description: 简单的Lottie动画管理器实现
  */
 
  #include "xn_lottie_manager.h"
  #include "xn_lvgl.h"
+ #include "lv_lottie.h"
  #include "esp_log.h"
  #include "esp_heap_caps.h"
  #include "esp_task_wdt.h"
@@ -272,7 +273,7 @@
      }
  }
  
- bool lottie_manager_init(void)
+ static bool lottie_manager_init(void)
  {
      if (g_initialized) {
          ESP_LOGW(TAG, "已经初始化过了");
@@ -799,7 +800,7 @@ static esp_err_t xn_lottie_mount_spiffs(void)
     return ret;
 }
 
-esp_err_t xn_lottie_app_init(const xn_lottie_app_config_t *cfg)
+esp_err_t xn_lottie_manager_init(const xn_lottie_app_config_t *cfg)
 {
     (void)cfg; // 目前暂未使用，预留给多屏等扩展
 

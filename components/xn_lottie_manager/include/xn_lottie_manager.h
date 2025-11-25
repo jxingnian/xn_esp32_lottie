@@ -2,8 +2,8 @@
  * @Author: xingnian j_xingnian@163.com
  * @Date: 2025-08-31 23:19:25
  * @LastEditors: xingnian jixingnian@gmail.com
- * @LastEditTime: 2025-11-25 15:51:25
- * @FilePath: \xn_esp32_lottie\components\xn_lottie\include\xn_lottie_app.h
+ * @LastEditTime: 2025-11-25 17:09:57
+ * @FilePath: \xn_esp32_lottie\components\xn_lottie_manager\include\xn_lottie_manager.h
  * @Description: 简单的Lottie动画管理器
  */
 
@@ -30,27 +30,21 @@ extern "C" {
 
 // 可以继续添加更多动画类型...
 
-// Lottie 应用初始化配置（预留多屏兼容等扩展使用）
+// Lottie 管理器初始化配置（预留多屏兼容等扩展使用）
 typedef struct {
     uint16_t screen_width;   // 屏幕宽度
     uint16_t screen_height;  // 屏幕高度
 } xn_lottie_app_config_t;
 
 /**
- * @brief 初始化 Lottie 应用（包含底层 LVGL / 屏幕 / SPIFFS / 管理器）
+ * @brief 初始化 Lottie 管理器（包含底层 LVGL / 屏幕 / SPIFFS / 管理器）
  *
  * 若 cfg 传入 NULL，则使用默认配置。
  *
  * @param cfg 配置指针，可为 NULL
  * @return esp_err_t ESP_OK 表示成功
  */
-esp_err_t xn_lottie_app_init(const xn_lottie_app_config_t *cfg);
-
-/**
- * @brief 初始化Lottie管理器
- * @return true 成功，false 失败
- */
-bool lottie_manager_init(void);
+esp_err_t xn_lottie_manager_init(const xn_lottie_app_config_t *cfg);
 
 /**
  * @brief 播放指定路径的动画

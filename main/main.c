@@ -19,8 +19,8 @@
 void app_main(void)
 {
     printf("esp32 lottie动画播放 By.星年\n");
-    // 初始化 Lottie 应用（内部完成 SPIFFS / LVGL / 屏幕等初始化）
-    esp_err_t ret_lottie = xn_lottie_app_init(NULL);
+    // 初始化 Lottie 管理器（内部完成 SPIFFS / LVGL / 屏幕等初始化）
+    esp_err_t ret_lottie = xn_lottie_manager_init(NULL);
     (void)ret_lottie;
 
     // 初始化 WiFi 管理
