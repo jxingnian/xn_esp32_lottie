@@ -3,6 +3,7 @@ idf_component_register(
         "src/xn_lottie_app.c"
         "src/xn_lottie_lvgl.c"
         "src/xn_lottie_panel_spd2010.c"
+        "src/xn_lottie_touch_spd2010.c"
     INCLUDE_DIRS
         "include"
     REQUIRES

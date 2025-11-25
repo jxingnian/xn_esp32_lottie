@@ -22,7 +22,7 @@
 
 // 硬件驱动头文件（BSP 层）
 #include "xn_lottie_panel_spd2010.h"
-#include "bsp_touch_spd2010.h"
+#include "xn_lottie_touch_spd2010.h"
 
 /*********************
  * 配置宏定义
