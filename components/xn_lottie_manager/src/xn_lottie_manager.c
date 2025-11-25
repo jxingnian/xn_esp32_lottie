@@ -9,7 +9,6 @@
 
  #include "xn_lottie_manager.h"
  #include "xn_lvgl.h"
- #include "lv_lottie.h"
  #include "esp_log.h"
  #include "esp_heap_caps.h"
  #include "esp_task_wdt.h"
