@@ -7,7 +7,7 @@
  * @Description: 使用官方SPD2010组件的LCD驱动实现
  */
 
-#include "xn_lottie_panel_spd2010.h"
+#include "bsp_panel_spd2010.h"
 
 static const char *TAG = "SPD2010_OFFICIAL";
 

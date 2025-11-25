@@ -7,7 +7,7 @@
  * @Description: 使用官方esp_lcd_touch_spd2010组件的触摸驱动实现
  */
 
-#include "xn_lottie_touch_spd2010.h"
+#include "bsp_touch_spd2010.h"
 
 static const char *TAG = "TOUCH_SPD2010_OFFICIAL";
 

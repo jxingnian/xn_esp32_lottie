@@ -2,12 +2,12 @@
  * @Author: xingnian j_xingnian@163.com
  * @Date: 2025-08-30 11:30:00
  * @LastEditors: xingnian jixingnian@gmail.com
- * @LastEditTime: 2025-11-15 10:55:45
- * @FilePath: \ESP_ChunFeng\main\bsp\bsp_display_lvgl\bsp_lvgl_driver.c
+ * @LastEditTime: 2025-11-25 16:58:17
+ * @FilePath: \xn_esp32_lottie\components\xn_lottie_manager\src\xn_lottie_lvgl.c
  * @Description: LVGL 9.2.2 驱动实现 - 为ESP32S3 + SPD2010显示屏设计
  */
 
-#include "xn_lottie_lvgl.h"
+#include "xn_lvgl.h"
 
 /*********************
  * 静态变量定义

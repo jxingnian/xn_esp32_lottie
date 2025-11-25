@@ -7,8 +7,8 @@
  * @Description: 简单的Lottie动画管理器实现
  */
 
- #include "xn_lottie_app.h"
- #include "xn_lottie_lvgl.h"
+ #include "xn_lottie_manager.h"
+ #include "xn_lvgl.h"
  #include "esp_log.h"
  #include "esp_heap_caps.h"
  #include "esp_task_wdt.h"

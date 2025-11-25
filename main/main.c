@@ -13,7 +13,7 @@
 #include "freertos/FreeRTOS.h"
 #include "freertos/task.h"
 #include "esp_system.h"
-#include "xn_lottie_app.h"
+#include "xn_lottie_manager.h"
 #include "xn_wifi_manage.h"
 
 void app_main(void)

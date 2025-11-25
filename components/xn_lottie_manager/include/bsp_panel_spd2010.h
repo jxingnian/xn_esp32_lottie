@@ -30,7 +30,7 @@
 
 // 官方SPD2010组件头文件
 #include "esp_lcd_spd2010.h"
-#include "xn_lottie_touch_spd2010.h"
+#include "bsp_touch_spd2010.h"
 #include "bsp_exio_tca9554.h"
 
 // LCD显示屏参数定义
