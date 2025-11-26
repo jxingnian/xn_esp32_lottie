@@ -29,7 +29,18 @@ esp_err_t Touch_Init_Official(void)
 
     ESP_LOGI(TAG, "创建触摸面板IO");
 
-    const esp_lcd_panel_io_i2c_config_t tp_io_config = ESP_LCD_TOUCH_IO_I2C_SPD2010_CONFIG();
+    // 手动配置触摸面板IO，确保频率与I2C总线兼容
+    esp_lcd_panel_io_i2c_config_t tp_io_config = {
+        .dev_addr = ESP_LCD_TOUCH_IO_I2C_SPD2010_ADDRESS,
+        .scl_speed_hz = I2C_MASTER_FREQ_HZ,  // 使用与I2C总线相同的频率
+        .control_phase_bytes = 1,
+        .dc_bit_offset = 0,
+        .lcd_cmd_bits = 8,
+        .lcd_param_bits = 8,
+        .flags = {
+            .disable_control_phase = 1,
+        }
+    };
 
     esp_err_t ret = esp_lcd_new_panel_io_i2c(i2c_bus, &tp_io_config, &touch_io_handle);
     if (ret != ESP_OK) {
