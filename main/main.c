@@ -14,7 +14,6 @@
 #include "freertos/task.h"
 #include "esp_system.h"
 #include "xn_lottie_manager.h"
-#include "xn_wifi_manage.h"
 
 void app_main(void)
 {
@@ -26,8 +25,4 @@ void app_main(void)
         printf("播放测试动画...\n");
         lottie_manager_play_anim(LOTTIE_ANIM_LOADING);
     }
-
-    // 初始化 WiFi 管理
-    esp_err_t ret = wifi_manage_init(NULL);
-    (void)ret; 
 }
