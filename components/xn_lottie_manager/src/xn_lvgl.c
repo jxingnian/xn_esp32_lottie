@@ -8,6 +8,7 @@
  */
 
 #include "xn_lvgl.h"
+#include "bsp_panel_spd2010.h"
 
 /*********************
  * 静态变量定义
@@ -265,6 +266,9 @@ esp_err_t lvgl_driver_init(void)
 {
     ESP_LOGI(TAG, "Initializing LVGL driver (version %d.%d.%d)",
              lv_version_major(), lv_version_minor(), lv_version_patch());
+
+    // 初始化LCD硬件（包括I2C、显示面板、触摸屏）
+    LCD_Init_Official();
 
     // 初始化LVGL库
     lv_init();

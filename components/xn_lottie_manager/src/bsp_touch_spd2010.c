@@ -2,12 +2,13 @@
  * @Author: xingnian j_xingnian@163.com
  * @Date: 2025-08-30 16:30:00
  * @LastEditors: xingnian jixingnian@gmail.com
- * @LastEditTime: 2025-11-15 10:56:11
- * @FilePath: \\ESP_ChunFeng\\main\\bsp\\bsp_touch_spd2010\\bsp_touch_spd2010.c
+ * @LastEditTime: 2025-11-26 21:11:54
+ * @FilePath: \xn_esp32_lottie\components\xn_lottie_manager\src\bsp_touch_spd2010.c
  * @Description: 使用官方esp_lcd_touch_spd2010组件的触摸驱动实现
  */
 
 #include "bsp_touch_spd2010.h"
+#include "bsp_i2c_driver.h"
 
 static const char *TAG = "TOUCH_SPD2010_OFFICIAL";
 
@@ -19,11 +20,18 @@ esp_err_t Touch_Init_Official(void)
 {
     ESP_LOGI(TAG, "开始初始化SPD2010触摸控制器（官方组件版本）");
 
+    // Get the shared I2C bus handle
+    i2c_master_bus_handle_t i2c_bus = I2C_Get_Bus_Handle();
+    if (i2c_bus == NULL) {
+        ESP_LOGE(TAG, "I2C bus not initialized");
+        return ESP_ERR_INVALID_STATE;
+    }
+
     ESP_LOGI(TAG, "创建触摸面板IO");
 
     const esp_lcd_panel_io_i2c_config_t tp_io_config = ESP_LCD_TOUCH_IO_I2C_SPD2010_CONFIG();
 
-    esp_err_t ret = esp_lcd_new_panel_io_i2c((esp_lcd_i2c_bus_handle_t)TOUCH_I2C_PORT, &tp_io_config, &touch_io_handle);
+    esp_err_t ret = esp_lcd_new_panel_io_i2c(i2c_bus, &tp_io_config, &touch_io_handle);
     if (ret != ESP_OK) {
         ESP_LOGE(TAG, "创建触摸面板IO失败: %s", esp_err_to_name(ret));
         return ret;

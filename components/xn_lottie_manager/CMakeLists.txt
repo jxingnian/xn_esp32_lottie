@@ -4,6 +4,8 @@ idf_component_register(
         "src/xn_lvgl.c"
         "src/bsp_panel_spd2010.c"
         "src/bsp_touch_spd2010.c"
+        "src/bsp_i2c_driver.c"
+        "src/bsp_exio_tca9554.c"
     INCLUDE_DIRS
         "include"
     REQUIRES

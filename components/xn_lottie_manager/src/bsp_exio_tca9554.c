@@ -8,6 +8,7 @@
  *
  */
 #include "bsp_exio_tca9554.h"
+#include "bsp_i2c_driver.h"
 
 /*****************************************************  操作寄存器REG   ****************************************************/
 /**
@@ -18,21 +19,14 @@
 uint8_t Read_REG(uint8_t REG)
 {
     uint8_t bitsStatus = 0; // 用于存储读取到的寄存器值
-    i2c_cmd_handle_t cmd = i2c_cmd_link_create(); // 创建I2C命令链
-    i2c_master_start(cmd); // 发送起始信号
-    // 发送器件地址+写命令
-    i2c_master_write_byte(cmd, (TCA9554_ADDRESS << 1) | I2C_MASTER_WRITE, true);
-    // 发送寄存器地址
-    i2c_master_write_byte(cmd, REG, true);
-    i2c_master_start(cmd); // 重新发送起始信号（重复起始）
-    // 发送器件地址+读命令
-    i2c_master_write_byte(cmd, (TCA9554_ADDRESS << 1) | I2C_MASTER_READ, true);
-    // 读取一个字节，发送NACK
-    i2c_master_read_byte(cmd, &bitsStatus, I2C_MASTER_NACK);
-    i2c_master_stop(cmd); // 发送停止信号
-    // 执行I2C命令
-    i2c_master_cmd_begin(I2C_MASTER_NUM, cmd, I2C_MASTER_TIMEOUT_MS / portTICK_PERIOD_MS);
-    i2c_cmd_link_delete(cmd); // 删除命令链，释放资源
+    
+    // 使用新的I2C驱动读取寄存器
+    esp_err_t ret = I2C_Read(TCA9554_ADDRESS, REG, &bitsStatus, 1);
+    if (ret != ESP_OK) {
+        // 读取失败，返回0
+        return 0;
+    }
+    
     return bitsStatus; // 返回读取到的寄存器值
 }
 
@@ -44,18 +38,8 @@ uint8_t Read_REG(uint8_t REG)
  */
 void Write_REG(uint8_t REG, uint8_t Data)
 {
-    i2c_cmd_handle_t cmd = i2c_cmd_link_create(); // 创建I2C命令链
-    i2c_master_start(cmd); // 发送起始信号
-    // 发送器件地址+写命令
-    i2c_master_write_byte(cmd, (TCA9554_ADDRESS << 1) | I2C_MASTER_WRITE, true);
-    // 发送寄存器地址
-    i2c_master_write_byte(cmd, REG, true);
-    // 发送要写入的数据
-    i2c_master_write_byte(cmd, Data, true);
-    i2c_master_stop(cmd); // 发送停止信号
-    // 执行I2C命令
-    i2c_master_cmd_begin(I2C_MASTER_NUM, cmd, I2C_MASTER_TIMEOUT_MS / portTICK_PERIOD_MS);
-    i2c_cmd_link_delete(cmd); // 删除命令链，释放资源
+    // 使用新的I2C驱动写入寄存器
+    I2C_Write(TCA9554_ADDRESS, REG, &Data, 1);
 }
 
 /********************************************************** 设置EXIO模式 **********************************************************/

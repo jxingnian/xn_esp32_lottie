@@ -8,6 +8,7 @@
  */
 
 #include "bsp_panel_spd2010.h"
+#include "bsp_i2c_driver.h"
 
 static const char *TAG = "SPD2010_OFFICIAL";
 
@@ -209,6 +210,13 @@ void SPD2010_Init_Official(void)
  */
 void LCD_Init_Official(void)
 {
+    // 初始化I2C总线（触摸屏需要）
+    esp_err_t ret = I2C_Init();
+    if (ret != ESP_OK) {
+        ESP_LOGE(TAG, "I2C初始化失败: %s", esp_err_to_name(ret));
+        return;
+    }
+
     SPD2010_Init_Official();   // 初始化SPD2010显示驱动
     Backlight_Init_Official();  // 初始化背光控制
     Touch_Init_Official();      // 初始化触摸屏（官方组件版本）
