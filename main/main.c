@@ -2,7 +2,7 @@
  * @Author: 星年 jixingnian@gmail.com
  * @Date: 2025-11-22 13:43:50
  * @LastEditors: xingnian jixingnian@gmail.com
- * @LastEditTime: 2025-11-26 21:30:49
+ * @LastEditTime: 2025-11-26 21:40:08
  * @FilePath: \xn_esp32_lottie\main\main.c
  * @Description: esp32 lottie动画播放 By.星年
  */

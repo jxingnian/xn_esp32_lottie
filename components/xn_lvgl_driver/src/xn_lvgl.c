@@ -2,8 +2,8 @@
  * @Author: xingnian j_xingnian@163.com
  * @Date: 2025-08-30 11:30:00
  * @LastEditors: xingnian jixingnian@gmail.com
- * @LastEditTime: 2025-11-26 21:31:49
- * @FilePath: \xn_esp32_lottie\components\xn_lottie_manager\src\xn_lvgl.c
+ * @LastEditTime: 2025-11-26 21:47:10
+ * @FilePath: \xn_esp32_lottie\components\xn_lvgl_driver\src\xn_lvgl.c
  * @Description: LVGL 9.2.2 驱动实现 - 为ESP32S3 + SPD2010显示屏设计
  */
 
