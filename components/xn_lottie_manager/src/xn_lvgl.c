@@ -2,8 +2,8 @@
  * @Author: xingnian j_xingnian@163.com
  * @Date: 2025-08-30 11:30:00
  * @LastEditors: xingnian jixingnian@gmail.com
- * @LastEditTime: 2025-11-25 16:58:17
- * @FilePath: \xn_esp32_lottie\components\xn_lottie_manager\src\xn_lottie_lvgl.c
+ * @LastEditTime: 2025-11-26 21:31:49
+ * @FilePath: \xn_esp32_lottie\components\xn_lottie_manager\src\xn_lvgl.c
  * @Description: LVGL 9.2.2 驱动实现 - 为ESP32S3 + SPD2010显示屏设计
  */
 
@@ -27,6 +27,14 @@ static esp_timer_handle_t lvgl_tick_timer = NULL;
 static uint8_t *lvgl_draw_buf1 = NULL;
 static uint8_t *lvgl_draw_buf2 = NULL;
 
+// LVGL任务句柄
+static TaskHandle_t lvgl_task_handle = NULL;
+
+// LVGL任务栈（使用PSRAM）
+#define LVGL_TASK_STACK_SIZE (1024*64/sizeof(StackType_t))
+static EXT_RAM_BSS_ATTR StackType_t lvgl_task_stack[LVGL_TASK_STACK_SIZE];
+static StaticTask_t lvgl_task_buffer;
+
 /*********************
  * 静态函数声明
  *********************/
@@ -34,7 +42,9 @@ static uint8_t *lvgl_draw_buf2 = NULL;
 static esp_err_t lvgl_display_init(void);
 static esp_err_t lvgl_indev_init(void);
 static esp_err_t lvgl_tick_timer_init(void);
+static esp_err_t lvgl_task_init(void);
 static void lvgl_cleanup_resources(void);
+static void lvgl_timer_task(void *pvParameters);
 
 /*********************
  * 回调函数实现
@@ -71,6 +81,14 @@ void lvgl_flush_cb(lv_display_t *disp, const lv_area_t *area, uint8_t *px_map)
 
     // 计算刷新像素数量
     uint32_t pixel_count = (offsetx2 + 1 - offsetx1) * (offsety2 + 1 - offsety1);
+
+    // 调试：打印刷新信息（仅前几次）
+    static int flush_count = 0;
+    if (flush_count < 5) {
+        ESP_LOGI(TAG, "Flush #%d: area(%d,%d)-(%d,%d), pixels=%lu", 
+                 flush_count, offsetx1, offsety1, offsetx2, offsety2, pixel_count);
+        flush_count++;
+    }
 
     // SPD2010是大端序，需要交换RGB字节顺序
     lv_draw_sw_rgb565_swap(px_map, pixel_count);
@@ -226,6 +244,51 @@ static esp_err_t lvgl_tick_timer_init(void)
     return ESP_OK;
 }
 
+static void lvgl_timer_task(void *pvParameters)
+{
+    ESP_LOGI(TAG, "LVGL timer task started");
+    
+    while (1) {
+        // 调用LVGL定时器处理函数
+        uint32_t delay_ms = lv_timer_handler();
+        
+        // 动态延时，平衡性能和功耗
+        if (delay_ms == LV_NO_TIMER_READY) {
+            // 无定时器时等待200ms
+            vTaskDelay(pdMS_TO_TICKS(200));
+        } else if (delay_ms < 20) {
+            vTaskDelay(pdMS_TO_TICKS(20));
+        } else {
+            delay_ms = 100;
+            vTaskDelay(pdMS_TO_TICKS(delay_ms));
+        }
+    }
+}
+
+static esp_err_t lvgl_task_init(void)
+{
+    ESP_LOGI(TAG, "Creating LVGL timer task");
+    
+    lvgl_task_handle = xTaskCreateStaticPinnedToCore(
+                           lvgl_timer_task,           // 任务函数
+                           "lvgl_timer",              // 任务名称
+                           LVGL_TASK_STACK_SIZE,      // 栈大小
+                           NULL,                      // 任务参数
+                           7,                         // 任务优先级7
+                           lvgl_task_stack,           // 栈数组(PSRAM)
+                           &lvgl_task_buffer,         // 任务控制块(内部RAM)
+                           1                          // 核心1
+                       );
+    
+    if (lvgl_task_handle == NULL) {
+        ESP_LOGE(TAG, "Failed to create LVGL timer task");
+        return ESP_FAIL;
+    }
+    
+    ESP_LOGI(TAG, "LVGL timer task created successfully");
+    return ESP_OK;
+}
+
 static void lvgl_cleanup_resources(void)
 {
     // 停止并删除定时器
@@ -291,6 +354,13 @@ esp_err_t lvgl_driver_init(void)
     ret = lvgl_tick_timer_init();
     if (ret != ESP_OK) {
         ESP_LOGE(TAG, "Failed to initialize tick timer");
+        goto error;
+    }
+
+    // 创建LVGL任务
+    ret = lvgl_task_init();
+    if (ret != ESP_OK) {
+        ESP_LOGE(TAG, "Failed to create LVGL task");
         goto error;
     }
 
