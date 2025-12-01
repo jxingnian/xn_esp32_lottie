@@ -23,6 +23,6 @@ void app_main(void)
     if (ret_lottie == ESP_OK) {
         // 播放一个测试动画（加载动画）
         printf("播放测试动画...\n");
-        lottie_manager_play_anim(LOTTIE_ANIM_LOADING);
+        lottie_manager_play_anim(LOTTIE_ANIM_COOL);
     }
 }
