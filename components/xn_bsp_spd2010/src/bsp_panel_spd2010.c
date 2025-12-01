@@ -1,9 +1,9 @@
 /*
  * @Author: xingnian j_xingnian@163.com
  * @Date: 2025-08-30 16:00:00
- * @LastEditors: xingnian j_xingnian@163.com
- * @LastEditTime: 2025-10-10 23:58:09
- * @FilePath: \esp-chunfeng\main\LCD_Driver\Display_SPD2010_Official.c
+ * @LastEditors: xingnian jixingnian@gmail.com
+ * @LastEditTime: 2025-12-01 10:59:02
+ * @FilePath: \xn_esp32_lottie\components\xn_bsp_spd2010\src\bsp_panel_spd2010.c
  * @Description: 使用官方SPD2010组件的LCD驱动实现
  */
 
@@ -214,6 +214,12 @@ void LCD_Init_Official(void)
     esp_err_t ret = I2C_Init();
     if (ret != ESP_OK) {
         ESP_LOGE(TAG, "I2C初始化失败: %s", esp_err_to_name(ret));
+        return;
+    }
+
+    ret = EXIO_Init();
+    if (ret != ESP_OK) {
+        ESP_LOGE(TAG, "EXIO初始化失败: %s", esp_err_to_name(ret));
         return;
     }
 

@@ -2,8 +2,8 @@
  * @Author: xingnian j_xingnian@163.com
  * @Date: 2025-08-30 16:30:00
  * @LastEditors: xingnian jixingnian@gmail.com
- * @LastEditTime: 2025-11-25 16:47:42
- * @FilePath: \xn_esp32_lottie\components\xn_lottie\include\xn_lottie_touch_spd2010.h
+ * @LastEditTime: 2025-12-01 11:01:47
+ * @FilePath: \xn_esp32_lottie\components\xn_bsp_spd2010\include\bsp_touch_spd2010.h
  * @Description: 使用官方esp_lcd_touch_spd2010组件的触摸驱动头文件
  */
 
@@ -15,11 +15,6 @@
 #include "esp_err.h"
 #include "esp_log.h"
 #include "driver/gpio.h"
-#include "driver/i2c_types.h"
-
-// 官方SPD2010触摸组件头文件
-#include "esp_lcd_touch.h"
-#include "esp_lcd_touch_spd2010.h"
 
 /*********************
  * 触摸屏参数配置
@@ -49,9 +44,7 @@
  * 全局变量声明
  *********************/
 
-// 触摸句柄
-extern esp_lcd_touch_handle_t touch_handle;
-extern esp_lcd_panel_io_handle_t touch_io_handle;
+// 触摸句柄（保留占位，实际实现使用自定义协议，不暴露底层句柄）
 
 /*********************
  * 函数声明
@@ -61,8 +54,6 @@ esp_err_t Touch_Init_Official(void);
 void      Touch_Deinit_Official(void);
 bool      Touch_Get_xy_Official(uint16_t *touch_x, uint16_t *touch_y, uint16_t *strength,
                                 uint8_t *touch_count, uint8_t max_points);
-esp_lcd_touch_handle_t Touch_Get_Handle_Official(void);
-bool      Touch_Is_Initialized_Official(void);
 
 /*********************
  * 兼容性宏定义

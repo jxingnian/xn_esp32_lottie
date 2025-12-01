@@ -13,5 +13,4 @@ idf_component_register(
         freertos
         lvgl
         espressif__esp_lcd_spd2010
-        espressif__esp_lcd_touch_spd2010
 )

@@ -1,3 +1,2 @@
 dependencies:
   espressif/esp_lcd_spd2010: "^1.0.0"
-  espressif/esp_lcd_touch_spd2010: "^1.0.0"
